@@ -3,9 +3,10 @@ Welcome to my project portfolio! This repository showcases a collection of proje
 
 ## Table Of Content
 <!-- toc -->
-- old toc 1
-- old toc 2
-- old toc 3
+- Python
+- Data Analysis With Python
+- Machine Learning
+- Computer Vision
 <!-- tocstop -->
 
 
@@ -34,8 +35,13 @@ This part showcases my work in Machine Learning with Python, where I apply vario
 ##### Neural Network
 Implement and explore of Neural Networks, a subset of machine learning algorithms inspired by the structure and function of the human brain. Neural networks are powerful tools for various applications, including image recognition, natural language processing, and more. This project aims to demonstrate the key concepts, architectures, and applications of neural networks using Python.
 
+### 4. Computer Vision
+This part focuses on Computer Vision, a field of artificial intelligence that enables computers to interpret and process visual information from the world. Computer vision techniques are widely used in applications such as image and video recognition, autonomous vehicles, facial recognition, and medical image analysis. This project demonstrates various concepts and techniques in computer vision using Python.
+
 ## Contact
 For collaboration or inquiries, feel free to reach out:
 
-    Email: omnia18ayman@gmail.com
+    [Email:] (omnia18ayman@gmail.com)
+    
+    omnia18ayman@gmail.com
     LinkedIn: https://www.linkedin.com/in/omnia-ayman-1b8340269/ 
