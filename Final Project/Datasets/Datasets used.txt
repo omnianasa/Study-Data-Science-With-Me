@@ -1,0 +1,5 @@
+Water Quality: 
+https://www.kaggle.com/datasets/adityakadiwal/water-potability/data
+
+World Economic Data:
+https://www.kaggle.com/datasets/madhurpant/world-economic-data

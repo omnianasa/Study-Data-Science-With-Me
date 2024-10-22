@@ -1,0 +1,72 @@
+import HandTrackingModel 
+import cv2
+import mediapipe as mp
+from pynput.keyboard import Key, Controller
+import numpy as np
+
+def length(x1,y1, x2, y2):
+       SquareRes = pow((x1 - x2), 2) + pow((y1 - y2), 2)
+       res = pow(SquareRes, 0.5)
+       return res
+
+minAng, maxAng = -95, 0
+minHand, maxHand = 50, 350
+llength, langle = None, None
+keyboard = Controller() #conrol the keyboard volume
+#record a videp using webcam
+cap = cv2.VideoCapture(0)
+cap.set(3, 1280)
+cap.set(4, 720)
+#take n object from the model we have made
+detector = HandTrackingModel.HandTracking()
+
+while True:
+    #use model functions to track the hand
+    _, frame = cap.read()
+    frame = detector.findHands(frame)
+    lmlist = detector.findPosition(frame, draw=False)
+    #draw the index 4 and 8 of landmarks that will make a line that will be used to control volums
+    if len(lmlist) != 0:
+        x1 = lmlist[4][1]
+        y1 = lmlist[4][2]
+        x2 = lmlist[8][1]
+        y2 = lmlist[8][2]
+        cv2.circle(frame, (x1, y1), 10, (0, 0, 0), cv2.FILLED) #point 4
+        cv2.circle(frame, (x2, y2), 10, (0, 0, 0), cv2.FILLED) #point 8
+        cv2.line(frame, (x1, y1), (x2, y2), (0, 0, 0), cv2.FONT_HERSHEY_COMPLEX, 2) # line between points 1, 2
+
+        #change the range (domain) of min, max hands to min and max angle by interpolation
+        angle = np.interp(length(x1, y1, x2, y2), [minHand, maxHand], [minAng, maxAng])
+        print(length(x1, y1, x2, y2), angle)
+        if length(x1, y1, x2, y2) < 50:
+               cv2.line(frame, (x1, y1), (x2, y2), (255, 0, 0), cv2.FONT_HERSHEY_COMPLEX, 2)
+        elif length(x1, y1, x2, y2) > 450:
+               cv2.line(frame, (x1, y1), (x2, y2), (0, 255, 0), cv2.FONT_HERSHEY_COMPLEX, 2)
+
+        #Rectangle bar that has the volume of the angle bar and how you track the volume
+        cv2.rectangle(frame, (50, 150), (90, 400), (0, 0, 0), 2)
+        #change the domain of the angle volume into the height of the rectancle
+        angleBar = np.interp(length(x1, y1, x2, y2),[minHand, maxHand], [400, 150])
+        cv2.rectangle(frame, (50, int(angleBar)), (90, 400), (0, 0, 255), cv2.FILLED)
+        #write the degree of volume control 
+        degree = int(np.interp(length(x1, y1, x2, y2), [minHand, maxHand], [0, 100]))
+        cv2.putText(frame, f"Volume: {degree}%", (20, 100), cv2.FONT_HERSHEY_COMPLEX,1, (0, 0, 0), 2)
+               
+
+
+        
+        if llength:
+               if length(x1, y1, x2, y2) > llength:
+                    keyboard.press(Key.media_volume_up)
+                    keyboard.release(Key.media_volume_up)  
+               else:
+                      keyboard.press(Key.media_volume_down)
+                      keyboard.release(Key.media_volume_down)
+        llength = length(x1, y1, x2, y2)
+
+    cv2.imshow("frame", frame)
+    if cv2.waitKey(1) == ord('q'): #close the window
+                break
+    
+cap.release()
+cv2.destroyAllWindows()
