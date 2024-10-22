@@ -41,7 +41,5 @@ This part focuses on Computer Vision, a field of artificial intelligence that en
 ## Contact
 For collaboration or inquiries, feel free to reach out:
 
-    [Email:] (omnia18ayman@gmail.com)
-    
-    omnia18ayman@gmail.com
+    Email: omnia18ayman@gmail.com
     LinkedIn: https://www.linkedin.com/in/omnia-ayman-1b8340269/ 
